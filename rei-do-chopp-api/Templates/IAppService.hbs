@@ -1,0 +1,18 @@
+using System.Threading.Tasks;
+using {{namespace}}.DataTransfer.{{pluralName}}.Request;
+using {{namespace}}.DataTransfer.{{pluralName}}.Response;
+using {{namespace}}.DataTransfer.Pagination.Responses;
+
+namespace {{namespace}}.Application.{{pluralName}}.Services.Interfaces
+{
+    public interface I{{pluralName}}AppService
+    {
+        Task<{{name}}Response> EditAsync(int id, {{name}}EditRequest request);
+
+        Task<{{name}}Response> InsertAsync({{name}}InsertRequest request);
+
+        Task<PaginationResponse<{{name}}Response>> ListAsync({{name}}ListRequest request);
+
+        Task<{{name}}Response> ValidateAsync(int id);
+    }
+}

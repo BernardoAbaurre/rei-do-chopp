@@ -1,0 +1,6 @@
+<app-header *ngIf="(usersService.currentUser$ | async)"></app-header>
+<div class="container" style="margin-top: 80px;">
+  <router-outlet></router-outlet>
+</div>
+
+<ngx-spinner bdColor="rgba(0,0,0,0.5)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

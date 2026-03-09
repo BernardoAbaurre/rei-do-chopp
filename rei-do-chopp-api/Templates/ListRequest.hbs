@@ -1,0 +1,22 @@
+using System;
+using {{namespace}}.Domain.Utils.Enums;
+using {{namespace}}.DataTransfer.Pagination.Responses;
+using {{namespace}}.DataTransfer.Pagination.Requests;
+
+namespace {{namespace}}.DataTransfer.{{pluralName}}.Requests
+{
+    public class {{name}}ListRequest : PaginationRequest
+    {
+        public int? Id { get; set; }
+{{#each properties}}
+        {{#if (isObject propertyType)}}
+        public int? {{propertyName}}Id { get; set; }
+        {{else}}
+        public {{propertyType}}{{#if (isNullable propertyType)}}?{{else}}{{#ifEquals propertyType "string"}}{{else}}?{{/ifEquals}}{{/if}} {{propertyName}} { get; set; }
+        {{/if}}
+{{/each}}
+
+
+        public {{name}}ListRequest() : base(pageSize: 10, ordenationField: "Id", ordenationType: OrdenationTypeEnum.ASC) {}
+    }
+}

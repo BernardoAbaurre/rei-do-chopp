@@ -1,0 +1,12 @@
+using System.Threading.Tasks;
+using {{namespace}}.Domain.{{pluralName}}.Entities;
+
+namespace {{namespace}}.Domain.{{pluralName}}.Services.Interfaces
+{
+    public interface I{{pluralName}}Service
+    {
+        Task<{{name}}> ValidateAsync(int id);
+        Task<{{name}}> InsertAsync({{#each properties}}{{propertyType}} {{camelCase propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}});
+        Task<{{name}}> EditAsync(int id,{{#each properties}}{{propertyType}} {{camelCase propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}});
+    }
+}

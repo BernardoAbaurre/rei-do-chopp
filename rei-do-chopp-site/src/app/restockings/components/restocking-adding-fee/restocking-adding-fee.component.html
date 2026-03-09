@@ -1,0 +1,22 @@
+<form [formGroup]="addingForm" class="row g-3 needs-validation">
+
+  <div class="col-md-8 form-group">
+    <label class="form-label">Descrição</label>
+    <input appFormControl type="text" id="barCode" class="form-control" formControlName="Description" autocomplete="off"/>
+  </div>
+
+  <div class="col-md-2 form-group">
+    <label class="form-label">Valor</label>
+    <div class="input-group">
+      <span class="input-group-text">R$</span>
+      <input appFormControl type="text" id="barCode" class="form-control" formControlName="Value" placeholder="0,00" mask="separator.2" thousandSeparator="." decimalMarker="," autocomplete="off"/>
+    </div>
+  </div>
+
+  <div class="col-md-2 text-center ">
+    <button class="btn btn-primary w-100" type="submit" style="margin-top: 30px;" (click)="addFee()" [disabled]="addingForm.invalid">
+      <i class="bi bi-plus-lg"></i>
+      Adcionar Taxa
+    </button>
+  </div>
+</form>

@@ -1,0 +1,12 @@
+<ng-select
+  #productSelect
+  [items]="items"
+  bindLabel="Description"
+  [searchFn]="selectFilter"
+  (search)="search$.next($event.term)"
+  placeholder="Selecione o produto"
+  autofocus="off"
+  [loading]="loading"
+  (change)="updateValue($event)"
+ >
+</ng-select>

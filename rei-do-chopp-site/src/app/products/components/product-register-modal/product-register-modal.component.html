@@ -1,0 +1,86 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Cadastrar novo produto</h5>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+  </div>
+  <form [formGroup]="form">
+    <div class="modal-body">
+      <div class="row g-3">
+
+        <div class="col-3">
+          <label for="barCode" class="form-label">Código de barras</label>
+          <input
+            appFormControl
+            type="text"
+            id="barCode"
+            class="form-control"
+            formControlName="BarCode"
+            placeholder="Código de Barras do Produto"
+            appInputFocus
+          />
+          <app-form-invalid-message
+            [form]="form"
+            prop="BarCode"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-5">
+          <label for="barCode" class="form-label">Descrição</label>
+          <input
+            appFormControl
+            type="text"
+            id="barCode"
+            class="form-control"
+            formControlName="Description"
+            placeholder="Descrição do Produto"
+          />
+          <app-form-invalid-message
+            [form]="form"
+            prop="Description"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-2">
+          <label for="barCode" class="form-label">Valor unitário</label>
+          <div class="input-group">
+            <span class="input-group-text">R$</span>
+            <input
+              appFormControl
+              type="text"
+              id="barCode"
+              class="form-control"
+              formControlName="SellingPrice"
+              placeholder="0,00"
+              mask="separator.2"
+              thousandSeparator="."
+              decimalMarker=","
+            />
+          </div>
+          <app-form-invalid-message
+            [form]="form"
+            prop="SellingPrice"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="status" class="form-label">Quantidade mínima</label>
+          <app-integer-input formControlName="AlertQuantity"/>
+          <app-form-invalid-message
+            [form]="form"
+            prop="AlertQuantity"
+          ></app-form-invalid-message>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-primary"
+        (click)="salvar()"
+        [disabled]="form.invalid"
+      >
+        Salvar
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,31 @@
+<form [formGroup]="addingForm" class="row g-3 needs-validation">
+  <div class="col-md-12 form-group">
+    <label for="status" class="form-label">Produto</label>
+    <ng-select
+      #productSelect
+      notFoundText="Nenhum item encontrado"
+      [items]="products"
+      bindLabel="Description"
+      formControlName="Product"
+      [searchFn]="selectFilter"
+      (search)="searchProduct$.next($event.term)"
+      placeholder="Selecione um produto"
+      closeOnSelect="true"
+      [loading]="loadingProducts"
+      (change)="selectProduct()"
+    >
+      <ng-template ng-option-tmp let-item="item" let-index="index">
+        <div>
+          {{ item.Description }} {{item.Active ? '' : ' - (Inativo)'}} - {{item.StockQuantity}}un <i *ngIf="item.Alert" class="text-warning bi bi-exclamation-triangle-fill"></i>
+        </div>
+      </ng-template>
+
+      <ng-template ng-label-tmp let-item="item" let-index="index">
+        <div>
+          {{ item.Description }} {{item.Active ? '' : ' - (Inativo)'}} - {{item.StockQuantity}}un <i *ngIf="item.Alert" class="text-warning bi bi-exclamation-triangle-fill"></i>
+        </div>
+      </ng-template>
+    </ng-select>
+
+  </div>
+</form>

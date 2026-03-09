@@ -1,0 +1,12 @@
+using System.Linq;
+using {{namespace}}.Domain.{{pluralName}}.Entities;
+using {{namespace}}.Domain.{{pluralName}}.Repositories.Filters;
+using {{namespace}}.Domain.Utils;
+
+namespace {{namespace}}.Domain.{{pluralName}}.Repositories
+{
+    public interface I{{pluralName}}Repository : IEntityFrameworkRepository<{{name}}>
+    {
+        IQueryable<{{name}}>Filter({{pluralName}}ListFilter filter);
+    }
+}

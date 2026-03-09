@@ -1,0 +1,125 @@
+<div class="row g-3 px-0 mb-4">
+  <!-- Receita de Produtos -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-bag-check text-danger"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-bag-check me-2 text-danger"></i>Receita de Produtos
+        </h6>
+        <div class="d-flex align-items-end gap-2">
+          <p class="m-0 fs-5 text-decoration-line-through text-muted" *ngIf="operationHistoryResponse?.ExpectedTotalProductsRevenue != operationHistoryResponse?.TotalProductsRevenue">
+            {{operationHistoryResponse?.ExpectedTotalProductsRevenue | currency: 'BRL'}}
+          </p>
+          <p class="m-0 fs-3 fw-bold" style="color: var(--brand-red);">
+            {{operationHistoryResponse?.TotalProductsRevenue ?? 0 | currency: 'BRL'}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taxas Adicionais Cobradas -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-percent text-warning"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-percent me-2 text-warning"></i>Taxas Adicionais
+        </h6>
+        <p class="m-0 fs-3 fw-bold" [ngClass]="operationHistoryResponse?.TotalChargedAdditionalFees >= 0 ? 'text-success' : 'text-danger'">
+          {{operationHistoryResponse?.TotalChargedAdditionalFees ?? 0 | currency: 'BRL'}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Descontos Totais -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-tag-fill text-info"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-tag-fill me-2 text-info"></i>Descontos Totais
+        </h6>
+        <p class="m-0 fs-3 fw-bold" [ngClass]="operationHistoryResponse?.TotalDiscount >= 0 ? 'text-success' : 'text-danger'">
+          {{operationHistoryResponse?.TotalDiscount ?? 0 | currency: 'BRL'}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receita Total -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden" style="border-left: 4px solid var(--brand-gold) !important;">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-cash-coin" style="color: var(--brand-gold);"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-cash-coin me-2" style="color: var(--brand-gold);"></i>Receita Total
+        </h6>
+        <p class="m-0 fs-3 fw-bold" [ngClass]="operationHistoryResponse?.TotalRevenue >= 0 ? 'text-success' : 'text-danger'">
+          {{operationHistoryResponse?.TotalRevenue ?? 0 | currency: 'BRL'}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Despesas Totais -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-credit-card text-danger"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-credit-card me-2 text-danger"></i>Despesas Totais
+        </h6>
+        <p class="m-0 fs-3 fw-bold" [ngClass]="-operationHistoryResponse?.TotalExpense >= 0 ? 'text-danger' : 'text-success'">
+          {{-operationHistoryResponse?.TotalExpense | currency: 'BRL'}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lucro Total -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(200, 53, 55, 0.05) 0%, rgba(255, 215, 0, 0.05) 100%);">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-graph-up text-success"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-graph-up me-2 text-success"></i>Lucro Total
+        </h6>
+        <p class="m-0 fs-3 fw-bold" [ngClass]="operationHistoryResponse?.TotalProfit >= 0 ? 'text-success' : 'text-danger'">
+          {{operationHistoryResponse?.TotalProfit ?? 0 | currency: 'BRL'}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Margem de Lucro -->
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card border-0 shadow-sm h-100 position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(25, 135, 84, 0.05) 0%, rgba(255, 193, 7, 0.05) 100%);">
+      <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 3rem;">
+        <i class="bi bi-pie-chart-fill text-success"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title fw-600 text-muted mb-2">
+          <i class="bi bi-pie-chart-fill me-2 text-success"></i>Margem de Lucro
+        </h6>
+        <p class="m-0 fs-3 fw-bold" [ngClass]="operationHistoryResponse?.TotalProfit >= 0 ? 'text-success' : 'text-danger'">
+          {{operationHistoryResponse?.TotalProfitMargin ?? 0}}%
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

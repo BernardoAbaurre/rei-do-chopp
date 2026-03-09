@@ -1,0 +1,29 @@
+<table *ngIf="response.Total > 0" class="table table-white table-sm mb-0 table border-start border-end">
+  <thead class="">
+    <tr>
+      <th>Produto</th>
+      <th>Preço Esperado (un)</th>
+      <th>Preço Cobrado (un)</th>
+      <th>Quantidade</th>
+      <th>Preço Total Esperado</th>
+      <th>Preço Total Cobrado</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let item of response.Data">
+    <tr>
+      <td>{{item?.Product?.Description}}</td>
+      <td>{{item?.ExpectedUnitPrice | currency: 'BRL'}}</td>
+      <td>{{item?.UnitPriceCharged | currency: 'BRL'}}</td>
+      <td>{{item?.Quantity}} un</td>
+      <td>{{item?.ExpectedTotalPrice | currency: 'BRL'}}</td>
+      <td>{{item?.TotalPriceCharged | currency: 'BRL'}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class=" text-center text-muted" *ngIf="response?.Total === 0">
+  Nenhum item encontrado.
+</div>
+
+
+

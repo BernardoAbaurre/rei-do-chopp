@@ -1,0 +1,23 @@
+<tr class="bg-light text-center">
+  <td colspan="10" class="px-4 py-2 border-top-0">
+    <div class="col-12 text-center">
+      <ul class="nav nav-tabs " [id]="orderId + 'myTab'" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" [id]="orderId + 'products-tab'" data-bs-toggle="tab" [attr.data-bs-target]="'#' + orderId + 'products-tab-pane'" type="button" role="tab" aria-controls="products-tab-pane" aria-selected="true">Produtos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" [id]="orderId + 'fees-tab'" data-bs-toggle="tab" [attr.data-bs-target]="'#' + orderId + 'fees-tab-pane'" type="button" role="tab" aria-controls="fees-tab-pane" aria-selected="false">Taxas Adicionais</button>
+        </li>
+      </ul>
+      <div class="tab-content" [id]="orderId + 'myTabContent'">
+        <div class="tab-pane fade show active" [id]="orderId + 'products-tab-pane'" role="tabpanel" aria-labelledby="products-tab" tabindex="0">
+          <app-order-products-details [orderId]="orderId"/>
+        </div>
+        <div class="tab-pane fade" [id]="orderId + 'fees-tab-pane'" role="tabpanel" aria-labelledby="fees-tab" tabindex="0">
+          <app-order-additional-fees-details [orderId]="orderId"></app-order-additional-fees-details>
+        </div>
+      </div>
+
+    </div>
+  </td>
+</tr>

@@ -1,0 +1,49 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using {{namespace}}.Domain.{{pluralName}}.Entities;
+using {{namespace}}.Domain.{{pluralName}}.Repositories;
+using {{namespace}}.Domain.{{pluralName}}.Repositories.Filters;
+using {{namespace}}.Infra.Utils;
+using {{namespace}}.Infra.Data;
+
+namespace {{namespace}}.Infra.{{pluralName}}.Repositories
+{
+    public class {{pluralName}}Repository : EntityFrameworkRepository<{{name}}>, I{{pluralName}}Repository
+    {
+        public {{pluralName}}Repository({{namespace}}DbContext dbContext) : base(dbContext)
+        {
+        }
+
+        public IQueryable<{{name}}> Filter({{pluralName}}ListFilter filter)
+        {
+            var query = Query();
+            
+            if (filter.Id.HasValue)
+            {
+                query = query.Where(x => x.Id == filter.Id.Value);
+            }
+            {{#each properties}}
+            {{#ifEquals propertyType "string"}}
+            if (!string.IsNullOrEmpty(filter.{{propertyName}}))
+            {
+                query = query.Where(x => x.{{propertyName}}.ToUpper().Contains(filter.{{propertyName}}.ToUpper()));
+            }
+            {{else}}
+            {{#if (isObject propertyType)}}
+            if (filter.{{propertyName}}Id.HasValue)
+            {
+                query = query.Where(x => x.{{propertyName}}.Id == filter.{{propertyName}}Id.Value);
+            }
+            {{else}}
+            if (filter.{{propertyName}}.HasValue)
+            {
+                query = query.Where(x => x.{{propertyName}} == filter.{{propertyName}}.Value);
+            }
+            {{/if}}
+            {{/ifEquals}}
+            {{/each}}
+
+            return query;
+        }
+    }
+}

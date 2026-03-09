@@ -1,0 +1,103 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Cadastrar novo produto</h5>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+  </div>
+  <form [formGroup]="form">
+    <div class="modal-body">
+      <div class="row g-3">
+
+        <div class="col-7">
+          <label class="form-label">E-mail</label>
+          <input
+            appFormControl
+            type="text"
+            class="form-control"
+            formControlName="Email"
+            placeholder="exemplo@exemplo.com"
+          />
+          <app-form-invalid-message
+            [form]="form"
+            prop="Email"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-5">
+          <label class="form-label">Cargo</label>
+          <app-roles-select appFormControl formControlName="RoleIds"></app-roles-select>
+          <app-form-invalid-message
+            [form]="form"
+            prop="RoleIds"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-6">
+          <label class="form-label">Nome</label>
+          <input
+            appFormControl
+            type="text"
+            class="form-control"
+            formControlName="FirstName"
+            placeholder="João"
+          />
+          <app-form-invalid-message
+            [form]="form"
+            prop="FirstName"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-6">
+          <label class="form-label">Sobrenome</label>
+          <input
+            appFormControl
+            type="text"
+            class="form-control"
+            formControlName="LastName"
+            placeholder="Silva"
+          />
+          <app-form-invalid-message
+            [form]="form"
+            prop="LastName"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-md-6 form-group" *ngIf="!user">
+          <label for="status" class="form-label">Senha</label>
+
+          <div class="input-group">
+            <input [type]="passwordInputType" class="form-control" formControlName="Password">
+            <button class="btn btn-outline-secondary" type="button" (mouseup)="passwordInputType = 'password'" (mousedown)="passwordInputType = 'text'" ><i class="bi bi-eye-fill"></i></button>
+          </div>
+
+          <app-form-invalid-message
+            [form]="form"
+            prop="Password"
+          ></app-form-invalid-message>
+        </div>
+
+        <div class="col-md-6 form-group" *ngIf="!user">
+          <label for="status" class="form-label">Verificar Senha</label>
+
+          <div class="input-group">
+            <input [type]="passwordInputType" class="form-control" formControlName="CheckPassword" appFormControl>
+            <button class="btn btn-outline-secondary" type="button" (mouseup)="passwordInputType = 'password'" (mousedown)="passwordInputType = 'text'" ><i class="bi bi-eye-fill"></i></button>
+          </div>
+
+          <div *ngIf="form.get('CheckPassword').hasError('passwordsMismatch') && form.get('CheckPassword').touched" class="invalid-feedback d-block">
+            {{ form.get('CheckPassword').getError('passwordsMismatch') }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-primary"
+        (click)="salvar()"
+        [disabled]="form.invalid"
+      >
+        Salvar
+      </button>
+    </div>
+  </form>
+</div>

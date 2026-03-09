@@ -1,0 +1,53 @@
+using System;
+using System.Threading.Tasks;
+using {{namespace}}.Domain.{{pluralName}}.Entities;
+using {{namespace}}.Domain.{{pluralName}}.Repositories;
+using {{namespace}}.Domain.{{pluralName}}.Services.Interfaces;
+using {{namespace}}.Domain.Utils.Exceptions;
+
+namespace {{namespace}}.Domain.{{pluralName}}.Services
+{
+    public class {{pluralName}}Service : I{{pluralName}}Service
+    {
+        private readonly I{{pluralName}}Repository {{camelCase pluralName}}Repository;
+
+        public {{pluralName}}Service(I{{pluralName}}Repository {{camelCase pluralName}}Repository)
+        {
+            this.{{camelCase pluralName}}Repository = {{camelCase pluralName}}Repository;
+        }
+
+        public async Task<{{name}}> EditAsync(int id,{{#each properties}}{{propertyType}} {{camelCase propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}})
+        {
+            {{name}} {{camelCase name}} = await ValidateAsync(id);
+
+            {{#each properties}}
+            {{camelCase name}}.Set{{propertyName}}({{camelCase propertyName}});
+            {{/each}}
+
+            {{camelCase pluralName}}Repository.Edit({{camelCase name}});
+
+            return {{camelCase name}};
+        }
+
+        public async Task<{{name}}> InsertAsync({{#each properties}}{{propertyType}} {{camelCase propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}})
+        {
+            {{name}} {{camelCase name}} = new {{name}}({{#each properties}}{{camelCase propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}});
+
+            await {{camelCase pluralName}}Repository.InsertAsync({{camelCase name}});
+            
+            return {{camelCase name}};
+        }
+
+        public async Task<{{name}}> ValidateAsync(int id)
+        {
+            {{name}} {{camelCase name}} = await {{camelCase pluralName}}Repository.FindByIdAsync(id);
+
+            if ({{camelCase name}} == null)
+            {
+                throw new RegisterNotFound(id);
+            }
+
+            return {{camelCase name}};
+        }
+    }
+}

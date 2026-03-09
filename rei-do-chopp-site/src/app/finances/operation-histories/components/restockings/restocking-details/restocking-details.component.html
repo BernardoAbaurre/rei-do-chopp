@@ -1,0 +1,27 @@
+<tr class="bg-light text-center">
+  <td colspan="10" class="px-4 py-2 brestocking-top-0">
+    <div class="col-12 text-center">
+      <ul class="nav nav-tabs " [id]="restockingId + 'myTab'" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" [id]="restockingId + 'products-tab'" data-bs-toggle="tab" [attr.data-bs-target]="'#' + restockingId + 'products-tab-pane'"
+            type="button" role="tab" aria-controls="products-tab-pane" aria-selected="true">Produtos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" [id]="restockingId + 'fees-tab'" data-bs-toggle="tab" [attr.data-bs-target]="'#' + restockingId + 'fees-tab-pane'" type="button"
+            role="tab" aria-controls="fees-tab-pane" aria-selected="false">Taxas Adicionais</button>
+        </li>
+      </ul>
+      <div class="tab-content" [id]="restockingId + 'myTabContent'">
+        <div class="tab-pane fade show active" [id]="restockingId + 'products-tab-pane'" role="tabpanel" aria-labelledby="products-tab"
+          tabindex="0">
+          <app-restocking-products-details [restockingId]="restockingId" />
+        </div>
+        <div class="tab-pane fade" [id]="restockingId + 'fees-tab-pane'" role="tabpanel" aria-labelledby="fees-tab" tabindex="0">
+          <app-restocking-additional-fees-details
+            [restockingId]="restockingId"></app-restocking-additional-fees-details>
+        </div>
+      </div>
+
+    </div>
+  </td>
+</tr>

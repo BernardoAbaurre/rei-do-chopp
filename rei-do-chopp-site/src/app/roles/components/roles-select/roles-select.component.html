@@ -1,0 +1,15 @@
+<ng-select
+  notFoundText="Nenhum item encontrado"
+  #roleSelect
+  [items]="items"
+  bindLabel="Name"
+  bindValue="Id"
+  (search)="search$.next($event.term)"
+  placeholder="Selecione o cargo"
+  [ngModel]="value"
+  (ngModelChange)="updateValue($event)"
+  autofocus="off"
+  [loading]="loading"
+  (change)="emmitChange($event)"
+ >
+</ng-select>

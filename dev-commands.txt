@@ -1,0 +1,36 @@
+echo %GHCR_TOKEN% | docker login ghcr.io -u bernardoabaurre --password-stdin
+
+
+docker build -t ghcr.io/bernardoabaurre/rei-do-chopp-api:latest -f Dockerfile.api ./rei-do-chopp-api
+docker build -t ghcr.io/bernardoabaurre/rei-do-chopp-site:latest -f Dockerfile.angular ./rei-do-chopp-site
+
+
+docker push ghcr.io/bernardoabaurre/rei-do-chopp-api:latest
+docker push ghcr.io/bernardoabaurre/rei-do-chopp-site:latest
+
+-----------------------------------------------
+.venv\Scripts\activate
+
+pyinstaller --onefile --noconsole --icon=icon-rei-do-chopp.ico --add-data "icon-rei-do-chopp.ico;." --name="Rei do Chopp" app.py
+-----------------------------------------------
+scp docker-compose.yml root@64.23.161.175:/root/rei-do-chopp/docker-compose.yml
+
+
+login no terminal: ssh root@64.23.161.175
+
+ver oq está rodando: docker ps
+
+
+docker-compose pull
+docker-compose up -d --build
+docker-compose down
+
+
+====================================
+
+scp root@64.23.161.175:/root/rei-do-chopp/logs-api.log ./logs-api.log
+
+-----------------
+
+
+docker logs --since="1h" rei-do-chopp_api_1

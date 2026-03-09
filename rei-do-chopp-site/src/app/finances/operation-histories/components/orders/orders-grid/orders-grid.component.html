@@ -1,0 +1,65 @@
+<div class="px-4" *ngIf="response?.Total > 0">
+  <table class="table align-middle">
+    <thead>
+      <tr>
+        <th class="text-center w-5"></th>
+        <th class="text-center w-5"></th>
+        <th class="text-center">Número <app-sort-button [request]="request" prop="Id" (sort)="list()" />
+        </th>
+        <th class="text-center">Responsável <app-sort-button [request]="request" prop="Cashier" (sort)="list()" />
+        </th>
+        <th class="text-center">Atendente <app-sort-button [request]="request" prop="Attendant" (sort)="list()" />
+        </th>
+        <th class="text-center">Data <app-sort-button [request]="request" prop="OrderDate" (sort)="list()" /></th>
+        <th class="text-center">Valor Esperado <app-sort-button [request]="request" prop="ExpectedProductsSumValue" (sort)="list()" /></th>
+        <th class="text-center">Valor <app-sort-button [request]="request" prop="RealProductsSumValue" (sort)="list()" /></th>
+        <th class="text-center">Desconto <app-sort-button [request]="request" prop="Discount" (sort)="list()" /></th>
+        <th class="text-center">Taxas Totais <app-sort-button [request]="request" prop="TotalFees" (sort)="list()" /></th>
+        <th class="text-center">Valor Total <app-sort-button [request]="request" prop="TotalValue" (sort)="list()" /></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let order of response?.Data; let i = index">
+        <tr>
+          <td>
+            <button class="btn btn-link p-0" (click)="toggleDetail(i)" title="Expandir/Recolher">
+              <i class="bi bi-chevron-down"
+                [ngClass]="openDetailsIdexes.includes(i) ? 'rotate-chev' : 'rotate-chev-0'"></i>
+            </button>
+          </td>
+          <td class="text-center">
+            <div class="btn-group dropend" role="group" aria-label="Button group with nested dropdown">
+              <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-gear"></i></button>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item btn" [href]="'./vendas/' + order.Id"><i class="bi bi-pencil"></i> Editar</a></li>
+                  <li><button class="dropdown-item btn" (click)="print(order.Id)"><i class="bi bi-receipt"></i> Imprimir Recibo</button></li>
+                  <li><button class="dropdown-item btn" (click)="askDelete(order.Id)"><i class="bi bi-trash"></i> Excluir</button></li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td class="text-center">{{ order?.Id}}</td>
+          <td class="text-center">{{ order?.Cashier}}</td>
+          <td class="text-center">{{ order?.Attendant}}</td>
+          <td class="text-center">{{ order?.OrderDate | date: 'dd/MM/YYYY HH:mm'}}</td>
+          <td class="text-center">{{ order?.ExpectedProductsSumValue | currency: 'BRL' }}</td>
+          <td class="text-center">{{ order?.RealProductsSumValue | currency: 'BRL' }}</td>
+          <td class="text-center">{{ order?.Discount | currency: 'BRL'}}</td>
+          <td class="text-center">{{ order?.TotalFees | currency: 'BRL' }}</td>
+          <td class="text-center">{{ order?.TotalValue | currency: 'BRL' }}</td>
+        </tr>
+        <app-orders-details *ngIf="openDetailsIdexes.includes(i)" [orderId]="order?.Id"></app-orders-details>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-3 text-center text-muted" *ngIf="response?.Total === 0">
+  Nenhum item encontrado.
+</div>
+
+<app-pagination (pageChanged)="list()" [request]="request" [response]="response"></app-pagination>

@@ -1,0 +1,93 @@
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Threading.Tasks;
+using AutoMapper;
+using {{namespace}}.Application.{{pluralName}}.Services.Interfaces;
+using {{namespace}}.DataTransfer.{{pluralName}}.Request;
+using {{namespace}}.DataTransfer.{{pluralName}}.Response;
+using {{namespace}}.Domain.{{pluralName}}.Entities;
+using {{namespace}}.Domain.{{pluralName}}.Repositories;
+using {{namespace}}.Domain.{{pluralName}}.Repositories.Filters;
+using {{namespace}}.DataTransfer.Pagination.Responses;
+using {{namespace}}.Domain.{{pluralName}}.Services.Interfaces;
+using {{namespace}}.Infra.Data;
+using {{namespace}}.Domain.Utils.Models;
+
+namespace {{namespace}}.Application.{{pluralName}}.Services
+{
+    public class {{pluralName}}AppService : I{{pluralName}}AppService
+    {
+        private readonly IMapper mapper;
+        private readonly {{namespace}}DbContext dbContext;
+        private readonly I{{pluralName}}Repository {{camelCase pluralName}}Repository;
+        private readonly I{{pluralName}}Service {{camelCase pluralName}}Service;
+
+        public {{pluralName}}AppService(
+            IMapper mapper,
+            {{namespace}}DbContext dbContext,
+            I{{pluralName}}Repository {{camelCase pluralName}}Repository,
+            I{{pluralName}}Service {{camelCase pluralName}}Service)
+        {
+            this.mapper = mapper;
+            this.dbContext = dbContext;
+            this.{{camelCase pluralName}}Repository = {{camelCase pluralName}}Repository;
+            this.{{camelCase pluralName}}Service = {{camelCase pluralName}}Service;
+        }
+
+        public async Task<{{name}}Response> EditAsync(int id, {{name}}EditRequest request)
+        {
+            await using IDbContextTransaction transaction = await dbContext.Database.BeginTransactionAsync();
+            
+            try
+            {
+                {{name}} entity = await {{camelCase pluralName}}Service.EditAsync(id, {{#each properties}}request.{{propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}});
+                
+                await dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                    
+                return mapper.Map<{{name}}Response>(entity);
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        public async Task<{{name}}Response> InsertAsync({{name}}InsertRequest request)
+        {
+            await using IDbContextTransaction transaction = await dbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                {{name}} entity = await {{camelCase pluralName}}Service.InsertAsync({{#each properties}}request.{{propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}});
+                
+                await dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return mapper.Map<{{name}}Response>(entity);
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        public async Task<PaginationResponse<{{name}}Response>> ListAsync({{name}}ListRequest request)
+        {
+            {{pluralName}}ListFilter filter = mapper.Map<{{pluralName}}ListFilter>(request);
+
+            IQueryable<{{name}}> query = {{camelCase pluralName}}Repository.Filter(filter);
+
+            PaginationModel<{{name}}> response = await {{camelCase pluralName}}Repository.ListAsync(query, filter);
+
+            return mapper.Map<PaginationResponse<{{name}}Response>>(response);
+        }
+
+        public async Task<{{name}}Response> ValidateAsync(int id)
+        {
+            {{name}} entity = await {{camelCase pluralName}}Service.ValidateAsync(id);
+            return mapper.Map<{{name}}Response>(entity);
+        }
+    }
+}

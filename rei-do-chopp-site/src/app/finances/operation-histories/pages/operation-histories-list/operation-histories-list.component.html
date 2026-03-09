@@ -1,0 +1,78 @@
+<div class="container-fluid mt-5 pt-3" style="min-height: 100vh; background-color: #f8f9fa;">
+  <div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: var(--brand-red); font-size: 2.5rem;">
+      <i class="bi bi-box-seam me-3"></i>Produtos e Estoque
+    </h1>
+    <p class="text-muted">Gerenciamento de produtos e movimentação de estoque</p>
+  </div>
+
+  <div class="card mb-4 shadow-sm border-0">
+    <div class="card-body p-4">
+      <form [formGroup]="filterForm" class="row g-3 align-items-end">
+        <div class="col-lg-2 col-md-4">
+          <label for="initialDate" class="form-label fw-600 text-dark mb-2">Data Inicial</label>
+          <app-date-picker-input formControlName="InitialDate" [time]="false" />
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <label for="finalDate" class="form-label fw-600 text-dark mb-2">Data Final</label>
+          <app-date-picker-input formControlName="FinalDate" [time]="false"/>
+        </div>
+        <div class="col-lg-5 col-md-8">
+          <label for="products" class="form-label fw-600 text-dark mb-2">Produtos</label>
+          <ng-select
+            #productSelect
+            notFoundText="Nenhum item encontrado"
+            [items]="products"
+            [multiple]="true"
+            bindLabel="Description"
+            bindValue="Id"
+            formControlName="ProductsIds"
+            [searchFn]="selectFilter"
+            (search)="searchProduct$.next($event.term)"
+            placeholder="Selecione os produtos"
+            autofocus="off"
+            [loading]="loadingProducts"
+            class="ng-select-custom"
+          >
+          </ng-select>
+        </div>
+        <div class="col-lg-3 col-md-12">
+          <button class="btn btn-outline-secondary w-100 py-2 fw-500" type="button" (click)="resetFilter()">
+            <i class="bi bi-arrow-counterclockwise me-2"></i>
+            Limpar Filtros
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-operation-history-summary [operationHistoryResponse]="operationHistoryResponse"></app-operation-history-summary>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body pb-0">
+      <ul class="nav nav-tabs nav-underline mb-0" id="myTab" role="tablist" style="border-bottom: 2px solid #e9ecef;">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active fw-500 pb-3" id="orders" data-bs-toggle="tab" data-bs-target="#orders-pane" type="button" role="tab" aria-controls="orders-pane" aria-selected="true" style="color: var(--brand-red);">
+            <i class="bi bi-basket2 me-2"></i>Vendas
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link fw-500 pb-3" id="restockings-tab" data-bs-toggle="tab" data-bs-target="#restockings-tab-pane" type="button" role="tab" aria-controls="restockings-tab-pane" aria-selected="false">
+            <i class="bi bi-box-seam me-2"></i>Reabastecimentos
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body pt-4 px-0">
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="orders-pane" role="tabpanel" aria-labelledby="orders" tabindex="0">
+          <app-orders-grid [form]="filterForm" (refresh)="resetFilter()"></app-orders-grid>
+        </div>
+        <div class="tab-pane fade" id="restockings-tab-pane" role="tabpanel" aria-labelledby="restockings-tab" tabindex="0">
+          <app-restockings-grid [form]="filterForm" (refresh)="resetFilter()"></app-restockings-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

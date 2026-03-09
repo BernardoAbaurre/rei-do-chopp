@@ -1,0 +1,15 @@
+using System;
+
+namespace {{namespace}}.DataTransfer.{{pluralName}}.Requests
+{
+    public class {{name}}EditRequest
+    {
+{{#each properties}}
+        {{#if (isObject propertyType)}}
+        public int {{propertyName}}Id { get; set; }
+        {{else}}
+        public {{propertyType}} {{propertyName}} { get; set; }
+        {{/if}}
+{{/each}}
+    }
+}

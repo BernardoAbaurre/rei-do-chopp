@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: rei-do-chopp-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+    volumes:
+      - mssql_data:/var/opt/mssql
+    restart: always
+    ports:
+      - "1433:1433" 
+
+  api:
+    image: ghcr.io/bernardoabaurre/rei-do-chopp-api:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=ReiDoChopp;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;Encrypt=False
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    image: ghcr.io/bernardoabaurre/rei-do-chopp-site:latest
+    ports:
+      - "80:80"
+    restart: always
+
+volumes:
+  mssql_data:

@@ -1,0 +1,12 @@
+<ng-select
+  [items]="items"
+  bindLabel="FullName"
+  bindValue="Id"
+  [ngModel]="value"
+  (ngModelChange)="updateValue($event)"
+  (search)="search$.next($event.term)"
+  placeholder="Selecione o usuário"
+  [loading]="loading"
+  (change)="emmitChange($event)"
+ >
+</ng-select>

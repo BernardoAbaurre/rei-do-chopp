@@ -1,0 +1,17 @@
+using System;
+
+
+namespace {{namespace}}.DataTransfer.{{pluralName}}.Response
+{
+    public class {{name}}Response
+    {
+        public int Id { get; set; }
+{{#each properties}}
+{{#if (isObject propertyType)}}
+        public {{propertyType}}Response {{propertyName}} { get; set; }
+{{else}}
+        public {{propertyType}} {{propertyName}} { get; set; }
+{{/if}}
+{{/each}}
+    }
+}

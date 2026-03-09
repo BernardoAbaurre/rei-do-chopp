@@ -1,0 +1,14 @@
+<div class="input-group">
+  <button type="button" class="btn btn-outline-secondary" (click)="decrementar()" [disabled]="value-1 < minValue">−</button>
+
+  <input type="number"
+       class="form-control text-center"
+       [ngClass]="{'is-invalid': touched && invalid}"
+       [ngModel]="value"
+       (ngModelChange)="onInputChange($event)"
+       (blur)="onTouched()"
+       mask="9*" />
+
+
+  <button type="button" class="btn btn-outline-secondary" (click)="incrementar()" [disabled]="value+1 > maxValue">+</button>
+</div>

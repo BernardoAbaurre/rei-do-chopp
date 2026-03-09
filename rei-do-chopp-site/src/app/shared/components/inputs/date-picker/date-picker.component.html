@@ -1,0 +1,20 @@
+<div class="input-group">
+  <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+
+  <input
+  type="text" class="form-control" bsDatepicker [bsValue]="date" (bsValueChange)="onDateChange($event)"
+  [bsConfig]="bsConfig" (blur)="onBlur()" style="max-width: 110px !important;" placeholder="00/00/0000"/>
+
+  <span *ngIf="time" class="input-group-text"><i class="bi bi-clock"></i></span>
+
+  <input *ngIf="time"
+    type="number" min="0" max="23" maxlength="2" class="form-control" [value]="hour" (input)="onHourChange($event.target)"
+    placeholder="00" (blur)="onBlur()" style="max-width: 45px !important;"/>
+
+  <span *ngIf="time" class="input-group-text">:</span>
+
+  <input *ngIf="time"
+    type="number" min="0" max="59" maxlength="2" class="form-control" [value]="minute" (input)="onMinuteChange($event.target)"
+    placeholder="00" (blur)="onBlur()" style="max-width: 45px !important;"/>
+
+</div>

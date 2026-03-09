@@ -1,0 +1,5 @@
+<i class="bi bi-chevron-expand" *ngIf="request.OrdenationField != prop;else sorting"></i>
+
+<ng-template #sorting>
+  <i class="bi" [ngClass]="request.OrdenationType == ordenationTypes.Ascendant ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+</ng-template>

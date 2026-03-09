@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+
+namespace {{namespace}}.Domain.{{pluralName}}.Entities
+{
+    public class {{name}}
+    {
+        public int Id { get; protected set; }
+{{#each properties}}
+        public {{propertyType}} {{propertyName}} { get; protected set; }
+        {{#if (isObject propertyType)}}
+        public int {{propertyName}}Id { get; protected set; }
+        {{/if}}
+{{/each}}
+        
+        protected {{name}}() {}
+
+        public {{name}}({{#each properties}}{{propertyType}} {{camelCase propertyName}}{{#if @last}}{{else}}, {{/if}}{{/each}})
+        {
+{{#each properties}}
+            Set{{propertyName}}({{camelCase propertyName}});
+{{/each}}
+        }
+
+{{#each properties}}
+        public virtual void Set{{propertyName}}({{propertyType}} {{camelCase propertyName}})
+        {
+            {{#if (isString propertyType)}}
+            if (string.IsNullOrWhiteSpace({{camelCase propertyName}}))
+                throw new ArgumentException("Required field: {{propertyName}}");
+
+            {{propertyName}} = {{camelCase propertyName}};
+            {{else if (isNumber propertyType)}}
+            {{#unless (isNullable propertyType)}}
+            if ({{camelCase propertyName}} == null)
+                throw new ArgumentException("Required field: {{propertyName}}");
+            {{/unless}}
+            {{propertyName}} = {{camelCase propertyName}};
+            {{else if (isDate propertyType)}}
+            {{#unless (isNullable propertyType)}}
+            if ({{camelCase propertyName}} == {{propertyType.MinValue}})
+                throw new ArgumentException("Required field: {{propertyName}}");
+            {{/unless}}
+            {{propertyName}} = {{camelCase propertyName}};
+            {{else if (isObject propertyType)}}
+            {{propertyName}} = {{camelCase propertyName}};
+            {{propertyName}}Id = {{camelCase propertyName}}.Id;
+            {{else}}
+            {{propertyName}} = {{camelCase propertyName}};
+            {{/if}}
+        }
+{{/each}}
+
+    }
+}

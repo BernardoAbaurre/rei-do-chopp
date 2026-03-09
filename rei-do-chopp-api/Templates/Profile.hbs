@@ -1,0 +1,18 @@
+using AutoMapper;
+using {{namespace}}.DataTransfer.{{pluralName}}.Request;
+using {{namespace}}.DataTransfer.{{pluralName}}.Response;
+using {{namespace}}.Domain.{{pluralName}}.Entities;
+using {{namespace}}.Domain.{{pluralName}}.Repositories.Filters;
+
+namespace {{namespace}}.Application.{{pluralName}}.Profiles
+{
+    public class {{pluralName}}Profile : Profile
+    {
+        public {{pluralName}}Profile()
+        {
+            CreateMap<{{name}}, {{name}}Response>();
+
+            CreateMap<{{name}}ListRequest, {{pluralName}}ListFilter>();
+        }
+    }
+}

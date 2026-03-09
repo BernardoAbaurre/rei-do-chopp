@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReiDoChopp.Api", "ReiDoChopp.Api\ReiDoChopp.Api.csproj", "{7808637A-78FE-4AA0-B7BB-0C1DAA76AED6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReiDoChopp.Application", "ReiDoChopp.Application\ReiDoChopp.Application.csproj", "{7EDE677D-7B57-430A-A0D7-83B9D47747A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReiDoChopp.DataTransfer", "ReiDoChopp.DataTransfer\ReiDoChopp.DataTransfer.csproj", "{20D16BD7-2FDF-4A2D-B6D4-6C30F3F35C5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReiDoChopp.Domain", "ReiDoChopp.Domain\ReiDoChopp.Domain.csproj", "{21F7360A-FDC3-4411-93C0-6C8C3C3E44C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReiDoChopp.Infra", "ReiDoChopp.Infra\ReiDoChopp.Infra.csproj", "{1BC8D166-125B-4D3F-9BC5-B3433AA02BAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReiDoChopp.Ioc", "ReiDoChopp.Ioc\ReiDoChopp.Ioc.csproj", "{9D3D7575-5F00-4EEB-9D96-E49F2857FEA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7808637A-78FE-4AA0-B7BB-0C1DAA76AED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7808637A-78FE-4AA0-B7BB-0C1DAA76AED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7808637A-78FE-4AA0-B7BB-0C1DAA76AED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7808637A-78FE-4AA0-B7BB-0C1DAA76AED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDE677D-7B57-430A-A0D7-83B9D47747A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDE677D-7B57-430A-A0D7-83B9D47747A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDE677D-7B57-430A-A0D7-83B9D47747A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDE677D-7B57-430A-A0D7-83B9D47747A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D16BD7-2FDF-4A2D-B6D4-6C30F3F35C5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D16BD7-2FDF-4A2D-B6D4-6C30F3F35C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D16BD7-2FDF-4A2D-B6D4-6C30F3F35C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20D16BD7-2FDF-4A2D-B6D4-6C30F3F35C5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21F7360A-FDC3-4411-93C0-6C8C3C3E44C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21F7360A-FDC3-4411-93C0-6C8C3C3E44C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21F7360A-FDC3-4411-93C0-6C8C3C3E44C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21F7360A-FDC3-4411-93C0-6C8C3C3E44C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC8D166-125B-4D3F-9BC5-B3433AA02BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC8D166-125B-4D3F-9BC5-B3433AA02BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC8D166-125B-4D3F-9BC5-B3433AA02BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC8D166-125B-4D3F-9BC5-B3433AA02BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D3D7575-5F00-4EEB-9D96-E49F2857FEA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D3D7575-5F00-4EEB-9D96-E49F2857FEA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D3D7575-5F00-4EEB-9D96-E49F2857FEA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D3D7575-5F00-4EEB-9D96-E49F2857FEA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36177337-FC93-4636-9A8B-53DEBF2D4A2C}
+	EndGlobalSection
+EndGlobal
