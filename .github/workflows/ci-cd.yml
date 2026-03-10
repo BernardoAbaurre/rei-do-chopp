@@ -29,7 +29,8 @@ jobs:
           context: ./rei-do-chopp-api
           file: ./Dockerfile.api
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/rei-do-chopp-api:latest
+          tags: ghcr.io/${{ github.repository_owner | lower }}/rei-do-chopp-api:latest
+          provenance: false
 
       - name: Build and push Site image
         uses: docker/build-push-action@v5
@@ -37,7 +38,8 @@ jobs:
           context: ./rei-do-chopp-site
           file: ./Dockerfile.angular
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/rei-do-chopp-site:latest
+          tags: ghcr.io/${{ github.repository_owner | lower }}/rei-do-chopp-site:latest
+          provenance: false
 
   deploy:
     needs: build-and-push
