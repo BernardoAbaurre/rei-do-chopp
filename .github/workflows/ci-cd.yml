@@ -47,11 +47,10 @@ jobs:
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 64.23.161.175
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /root
-            docker-compose down
-            docker-compose pull
-            docker-compose up -d
+        host: 104.236.2.50
+        username: root
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /root/rei-do-chopp
+          docker-compose pull
+          docker-compose down

@@ -27,6 +27,8 @@ services:
     image: ghcr.io/bernardoabaurre/rei-do-chopp-site:latest
     ports:
       - "80:80"
+    environment:
+      - API_URL=http://104.236.2.50:5000
     restart: always
 
 volumes:
