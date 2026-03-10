@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_OWNER: bernardoabaurre
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -19,7 +23,7 @@ jobs:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
@@ -29,7 +33,7 @@ jobs:
           context: ./rei-do-chopp-api
           file: ./Dockerfile.api
           push: true
-          tags: ghcr.io/${{ github.repository_owner | lower }}/rei-do-chopp-api:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/rei-do-chopp-api:latest
           provenance: false
 
       - name: Build and push Site image
@@ -38,7 +42,7 @@ jobs:
           context: ./rei-do-chopp-site
           file: ./Dockerfile.angular
           push: true
-          tags: ghcr.io/${{ github.repository_owner | lower }}/rei-do-chopp-site:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/rei-do-chopp-site:latest
           provenance: false
 
   deploy:
@@ -56,4 +60,5 @@ jobs:
             cd /root/rei-do-chopp
             docker-compose pull
             docker-compose down
+            docker-compose up -d
             docker-compose up -d
