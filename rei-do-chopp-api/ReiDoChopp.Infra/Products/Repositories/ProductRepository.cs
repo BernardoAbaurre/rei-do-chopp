@@ -31,7 +31,20 @@ namespace ReiDoChopp.Infra.Products.Repositories
             }
             if (!string.IsNullOrEmpty(filter.Description))
             {
-                query = query.Where(x => x.Description.Contains(filter.Description));
+                var description = filter.Description;
+
+                query = query.Where(x =>
+                    EF.Functions.Unaccent(x.Description)
+                        .Contains(EF.Functions.Unaccent(description)));
+            }
+            if (!string.IsNullOrEmpty(filter.DescriptionOrBarCode))
+            {
+                var term = filter.DescriptionOrBarCode;
+
+                query = query.Where(x =>
+                    x.BarCode == term ||
+                    EF.Functions.Unaccent(x.Description)
+                        .Contains(EF.Functions.Unaccent(term)));
             }
             if (filter.SellingPrice.HasValue)
             {
@@ -44,10 +57,6 @@ namespace ReiDoChopp.Infra.Products.Repositories
             if (filter.Active.HasValue)
             {
                 query = query.Where(x => x.Active == filter.Active.Value);
-            }
-            if (!string.IsNullOrEmpty(filter.DescriptionOrBarCode))
-            {
-                query = query.Where(x => x.BarCode.Equals(filter.DescriptionOrBarCode) || x.Description.Contains(filter.DescriptionOrBarCode));
             }
             if (filter.Alert.HasValue && filter.Alert.Value)
             {
