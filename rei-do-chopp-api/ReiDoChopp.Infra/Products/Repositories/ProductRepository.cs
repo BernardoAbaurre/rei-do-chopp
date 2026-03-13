@@ -31,7 +31,7 @@ namespace ReiDoChopp.Infra.Products.Repositories
             }
             if (!string.IsNullOrEmpty(filter.Description))
             {
-                query = query.Where(x => EF.Functions.Collate(x.Description, "Latin1_General_CI_AI").Contains(EF.Functions.Collate(filter.Description, "Latin1_General_CI_AI")));
+                query = query.Where(x => x.Description.Contains(filter.Description));
             }
             if (filter.SellingPrice.HasValue)
             {
@@ -47,7 +47,7 @@ namespace ReiDoChopp.Infra.Products.Repositories
             }
             if (!string.IsNullOrEmpty(filter.DescriptionOrBarCode))
             {
-                query = query.Where(x => x.BarCode.Equals(filter.DescriptionOrBarCode) || EF.Functions.Collate(x.Description, "Latin1_General_CI_AI").Contains(filter.DescriptionOrBarCode));
+                query = query.Where(x => x.BarCode.Equals(filter.DescriptionOrBarCode) || x.Description.Contains(filter.DescriptionOrBarCode));
             }
             if (filter.Alert.HasValue && filter.Alert.Value)
             {
