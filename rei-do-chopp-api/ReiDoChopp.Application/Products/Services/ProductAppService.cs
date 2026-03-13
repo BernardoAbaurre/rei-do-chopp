@@ -1,5 +1,4 @@
 using AutoMapper;
-using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using ReiDoChopp.Application.Products.Services.Interfaces;

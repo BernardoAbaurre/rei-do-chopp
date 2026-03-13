@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Storage;
 using ReiDoChopp.Application.Users.Services.Interfaces;
 using ReiDoChopp.DataTransfer.Pagination.Responses;
@@ -15,6 +14,7 @@ using ReiDoChopp.Domain.Users.Services.Interfaces;
 using ReiDoChopp.Domain.Utils.Models;
 using ReiDoChopp.Infra.Data;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace ReiDoChopp.Application.Users.Services
 {
@@ -152,7 +152,7 @@ namespace ReiDoChopp.Application.Users.Services
 
                 return new DbTestResponse() { Result = true };
             }
-            catch (SqlException ex) {
+            catch (SqlTypeException ex) {
 
                 return new DbTestResponse() { Result = false };
             }
