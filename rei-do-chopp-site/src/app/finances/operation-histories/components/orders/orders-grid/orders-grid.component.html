@@ -1,9 +1,9 @@
-<div class="px-4" *ngIf="response?.Total > 0">
-  <table class="table align-middle">
+<div class="table py-4" *ngIf="response?.Total > 0">
+  <table class="table align-middle ">
     <thead>
       <tr>
-        <th class="text-center w-5"></th>
-        <th class="text-center w-5"></th>
+        <th class="text-center"></th>
+        <th class="text-center"></th>
         <th class="text-center">Número <app-sort-button [request]="request" prop="Id" (sort)="list()" />
         </th>
         <th class="text-center">Responsável <app-sort-button [request]="request" prop="Cashier" (sort)="list()" />
@@ -11,18 +11,22 @@
         <th class="text-center">Atendente <app-sort-button [request]="request" prop="Attendant" (sort)="list()" />
         </th>
         <th class="text-center">Data <app-sort-button [request]="request" prop="OrderDate" (sort)="list()" /></th>
-        <th class="text-center">Valor Esperado <app-sort-button [request]="request" prop="ExpectedProductsSumValue" (sort)="list()" /></th>
-        <th class="text-center">Valor <app-sort-button [request]="request" prop="RealProductsSumValue" (sort)="list()" /></th>
+        <th class="text-center">Valor Esperado<app-sort-button [request]="request" prop="ExpectedProductsSumValue"
+            (sort)="list()" /></th>
+        <th class="text-center">Valor<app-sort-button [request]="request" prop="RealProductsSumValue" (sort)="list()" />
+        </th>
         <th class="text-center">Desconto <app-sort-button [request]="request" prop="Discount" (sort)="list()" /></th>
-        <th class="text-center">Taxas Totais <app-sort-button [request]="request" prop="TotalFees" (sort)="list()" /></th>
-        <th class="text-center">Valor Total <app-sort-button [request]="request" prop="TotalValue" (sort)="list()" /></th>
+        <th class="text-center">Taxas Totais <app-sort-button [request]="request" prop="TotalFees" (sort)="list()" />
+        </th>
+        <th class="text-center">Valor Total <app-sort-button [request]="request" prop="TotalValue" (sort)="list()" />
+        </th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngFor="let order of response?.Data; let i = index">
         <tr>
           <td>
-            <button class="btn btn-link p-0" (click)="toggleDetail(i)" title="Expandir/Recolher">
+            <button class="btn" (click)="toggleDetail(i)">
               <i class="bi bi-chevron-down"
                 [ngClass]="openDetailsIdexes.includes(i) ? 'rotate-chev' : 'rotate-chev-0'"></i>
             </button>

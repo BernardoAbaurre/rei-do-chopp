@@ -28,7 +28,8 @@ export class HeaderComponent {
     { Name: "Usuários", Url: "usuarios", Icon: "bi bi-people" },
     { Name: "Configurações", Url: "configuracoes", Icon: "bi bi-gear" },
   ]
-pages: Page[] = [];
+
+  pages: Page[] = [];
   form: FormGroup;
   user: UserResponse;
   currentUrl: string = '';
@@ -72,15 +73,5 @@ pages: Page[] = [];
   {
     this.usersService.logout();
     this.router.navigateByUrl('/login');
-  }
-
-  public closeOffcanvas(event: any) {
-    const offcanvasElement = document.querySelector('.offcanvas');
-    if (offcanvasElement && (offcanvasElement as any).classList.contains('show')) {
-      const bsOffcanvas = (window as any).bootstrap?.Offcanvas?.getInstance(offcanvasElement);
-      if (bsOffcanvas) {
-        bsOffcanvas.hide();
-      }
-    }
   }
 }
