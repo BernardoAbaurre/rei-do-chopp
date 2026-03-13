@@ -33,21 +33,5 @@
         <li><a class="dropdown-item py-2" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
       </ul>
     </div>
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background: linear-gradient(135deg, #D9534F 0%, #C64744 100%);">
-      <div class="offcanvas-header border-bottom border-light border-opacity-25">
-        <h5 class="offcanvas-title text-white fw-bold" id="offcanvasNavbarLabel">Menu</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1">
-          <li class="nav-item" *ngFor="let page of pages">
-            <a class="nav-link text-white rounded-3 px-3 py-2 mb-2" [href]="page.Url" style="transition: all 0.3s ease;" (click)="closeOffcanvas($event)"> 
-              <i [ngClass]="page.Icon" class="me-2"></i> {{page.Name}}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </nav>

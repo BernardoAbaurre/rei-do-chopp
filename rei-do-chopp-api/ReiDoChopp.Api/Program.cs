@@ -53,22 +53,6 @@ builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 var app = builder.Build();
 
-// Apply migrations and seed the database
-try
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<ReiDoChoppDbContext>();
-        dbContext.Database.Migrate();
-    }
-}
-catch (Exception ex)
-{
-    var logger = app.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred while migrating the database.");
-    throw;
-}
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

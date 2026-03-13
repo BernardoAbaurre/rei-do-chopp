@@ -28,8 +28,7 @@ export class HeaderComponent {
     { Name: "Usuários", Url: "usuarios", Icon: "bi bi-people" },
     { Name: "Configurações", Url: "configuracoes", Icon: "bi bi-gear" },
   ]
-
-  pages: Page[] = [];
+pages: Page[] = [];
   form: FormGroup;
   user: UserResponse;
   currentUrl: string = '';
