@@ -1,17 +1,16 @@
 services:
   db:
-    image: mcr.microsoft.com/mssql/server:2022-express
+    image: postgres:15-alpine
     container_name: rei-do-chopp-db
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_PID=Express
-      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
-      - MSSQL_MEMORY_LIMIT_MB=1024
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=reidochopp
     volumes:
-      - mssql_data:/var/opt/mssql
+      - postgres_data:/var/lib/postgresql/data
     restart: always
     ports:
-      - "1433:1433" 
+      - "5432:5432" 
 
   api:
     image: ghcr.io/bernardoabaurre/rei-do-chopp-api:latest
@@ -33,4 +32,4 @@ services:
     restart: always
 
 volumes:
-  mssql_data:
+  postgres_data:

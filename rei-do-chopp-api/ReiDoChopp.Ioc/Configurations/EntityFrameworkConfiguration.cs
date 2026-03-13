@@ -14,7 +14,7 @@ namespace ReiDoChopp.Ioc.Configurations
             services.AddDbContext<ReiDoChoppDbContext>(options =>
             {
                 options.UseLazyLoadingProxies()
-                .UseSqlServer(configuration["ConnectionStrings:ReiDoChoppConnectionString"]!).EnableSensitiveDataLogging();
+                .UseNpgsql(configuration["ConnectionStrings:ReiDoChoppConnectionString"]!).EnableSensitiveDataLogging();
             });
 
             services.AddIdentity<User, Role>(options =>
