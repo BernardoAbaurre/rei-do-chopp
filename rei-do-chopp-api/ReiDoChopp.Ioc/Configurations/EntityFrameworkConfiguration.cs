@@ -11,10 +11,18 @@ namespace ReiDoChopp.Ioc.Configurations
     {
         public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var isDevelopment = configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development";
+
             services.AddDbContext<ReiDoChoppDbContext>(options =>
             {
                 options.UseLazyLoadingProxies()
-                .UseNpgsql(configuration["ConnectionStrings:ReiDoChoppConnectionString"]!).EnableSensitiveDataLogging();
+                .UseNpgsql(connectionString);
+
+                if (isDevelopment)
+                {
+                    options.EnableSensitiveDataLogging();
+                }
             });
 
             services.AddIdentity<User, Role>(options =>
