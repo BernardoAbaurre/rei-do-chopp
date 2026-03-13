@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ReiDoChopp.Application.Orders.Profiles;
 using ReiDoChopp.Application.Users.Profiles;
+using ReiDoChopp.Infra.Data;
 using ReiDoChopp.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +52,22 @@ builder.Services.AddAutoMapper(typeof(OrdersProfile).Assembly);
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 var app = builder.Build();
+
+// Apply migrations and seed the database
+try
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ReiDoChoppDbContext>();
+        dbContext.Database.Migrate();
+    }
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred while migrating the database.");
+    throw;
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
