@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_OWNER: bernardoabaurre
@@ -57,8 +61,35 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -e  # Exit on any error
+
             cd /root/rei-do-chopp
+
+            echo "📦 Pulling latest images..."
             docker-compose pull
+
+            echo "🛑 Stopping old containers..."
             docker-compose down
+
+            echo "🚀 Starting new containers..."
             docker-compose up -d
-            docker-compose up -d
+
+            echo "✅ Deployment successful! Now cleaning old images..."
+
+            # Remove ALL images not currently in use by any container
+            # This keeps ONLY the images referenced by running containers (current deployment)
+            docker image prune -a --force
+
+            # Remove any stopped containers
+            docker container prune -f
+
+            # Remove unused volumes
+            docker volume prune -f
+
+            # Clean build cache
+            docker buildx prune -a -f
+
+            echo "🧹 Cleanup complete!"
+            echo ""
+            echo "📊 Current Docker images in use:"
+            docker images --filter "dangling=false" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"

@@ -1,130 +1,168 @@
 # Rei do Chopp
 
-Sistema de gestão para distribuidora de bebidas, incluindo API backend, frontend web e helper desktop para impressão.
+Sistema de gestão para distribuidora de bebidas (administrativo + vendas) com **API REST**, **frontend web** e **helper desktop para impressão**.
 
-## Tecnologias
+> ✅ Projeto com arquitetura em camadas (Clean Architecture), autenticação via JWT + roles, testes básicos, envio de e-mail com Mailjet, e pipeline CI/CD (GitHub Actions) para build, publish de imagens Docker e deploy automático.
 
-- **Backend**: .NET 8 (ASP.NET Core) com Entity Framework Core
-- **Frontend**: Angular 19 com Angular Material
-- **Banco de Dados**: SQL Server (Docker)
-- **Helper**: Python (Flask, Tkinter, PyInstaller)
-- **Infraestrutura**: Docker, Docker Compose, GitHub Actions, GHCR
+---
 
-## Estrutura do Projeto
+## 🧱 Visão Geral da Arquitetura
+
+O projeto segue uma arquitetura em camadas com separação clara entre domínios e infraestrutura:
+
+- **API (`rei-do-chopp-api`)**
+  - `ReiDoChopp.Api`: ponto de entrada (controllers, middlewares, Swagger)
+  - `ReiDoChopp.Application`: casos de uso, validações e DTOs
+  - `ReiDoChopp.Domain`: entidades, regras de negócio e serviços de domínio
+  - `ReiDoChopp.Infra`: implementação de persistência (EF Core/Postgres), envio de e-mail (Mailjet), configurações e infraestrutura
+  - `ReiDoChopp.Ioc`: configuração de DI (injeção de dependência) e setups (auth, EF, identity)
+
+- **Frontend (`rei-do-chopp-site`)**
+  - Angular 19 + Angular Material, consumindo API via JWT
+
+- **Helper desktop (`rei-do-chopp-helper`)**
+  - Aplicativo Python (Flask + Tkinter) para impressão de pedidos em impressora local
+
+- **Docker + CI/CD**
+  - Docker Compose para desenvolvimento/produção local
+  - GitHub Actions para build/push de imagens e deploy automático na VM (SSH)
+
+---
+
+## 🚀 Tecnologias
+
+- **Backend**: .NET 8 (ASP.NET Core), Entity Framework Core, Clean Architecture
+- **Banco de Dados**: PostgreSQL (via Docker)
+- **Autenticação**: JWT (Bearer Token) + roles (Administrador / Desenvolvedor)
+- **E-mail**: Mailjet (envio de reset de senha)
+- **Frontend**: Angular 19, Angular Material, RxJS
+- **Helper desktop**: Python 3 (Flask + Tkinter), empacotável com PyInstaller
+- **Infraestrutura**: Docker, Docker Compose, GitHub Actions, GHCR (GitHub Container Registry)
+
+---
+
+## 🗂 Estrutura do Repositório
 
 ```
 rei-do-chopp/
-├── rei-do-chopp-api/          # API .NET
-│   ├── ReiDoChopp.Api/        # Projeto principal da API
-│   ├── ReiDoChopp.Application/# Lógica de aplicação
-│   ├── ReiDoChopp.Domain/     # Domínio e entidades
-│   ├── ReiDoChopp.Infra/      # Infraestrutura (EF Core, etc.)
-│   └── ReiDoChopp.Ioc/        # Injeção de dependência
+├── rei-do-chopp-api/          # API backend (.NET)
 ├── rei-do-chopp-site/         # Frontend Angular
-├── rei-do-chopp-helper/       # Helper Python para impressão
-├── rei-do-chopp-scripts/      # Scripts SQL
-├── docker-compose.yml         # Orquestração Docker
-├── Dockerfile.api             # Dockerfile para API
-├── Dockerfile.angular         # Dockerfile para frontend
+├── rei-do-chopp-helper/       # Helper desktop (Python)
+├── rei-do-chopp-scripts/      # SQL scripts (relatórios / limpeza)
+├── docker-compose.yml         # Orquestração Docker para todos os serviços
+├── Dockerfile.api             # Build da API (.NET)
+├── Dockerfile.angular         # Build do frontend (Angular)
 └── .env.example               # Exemplo de variáveis de ambiente
 ```
 
-## Pré-requisitos
+---
 
-- Docker e Docker Compose
-- .NET 8 SDK
-- Node.js 20+
-- Python 3.8+ (para helper)
-- Git
+## ▶️ Como rodar localmente (Docker)
 
-## Configuração Local
+### 1) Pré-requisitos
 
-1. Clone o repositório:
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/)
+- (Opcional) .NET 8 SDK, Node.js 20+, Python 3.8+
 
-   ```bash
-   git clone https://github.com/bernardoabaurre/rei-do-chopp.git
-   cd rei-do-chopp
-   ```
+### 2) Configurar variáveis de ambiente
 
-2. Configure variáveis de ambiente:
+```bash
+cp .env.example .env
+# Edite .env com valores reais (senha do banco, JWT, chaves Mailjet, etc.)
+```
 
-   ```bash
-   cp .env.example .env
-   # Edite .env com suas chaves
-   ```
+### 3) Subir containers
 
-3. Execute os serviços:
+```bash
+docker compose up -d
+```
 
-   ```bash
-   docker-compose up -d
-   ```
+### 4) Acessos
 
-4. Para desenvolvimento local:
-   - API: `cd rei-do-chopp-api && dotnet run`
-   - Frontend: `cd rei-do-chopp-site && npm install && ng serve`
-   - Helper: `cd rei-do-chopp-helper && python app.py`
+- Frontend (UI): http://localhost
+- API Swagger: http://localhost:5000/swagger
+- Banco de dados (Postgres): localhost:5432 (usuário: `postgres`)
 
-## Deploy
+---
 
-### VM (Digital Ocean)
+## 🛠️ Rodar em modo de desenvolvimento (sem Docker)
 
-1. A VM contém apenas Docker e as imagens.
-2. Volumes persistentes para dados do banco.
-3. Acesso via SSH: `ssh root@64.23.161.175`
+### API (.NET)
 
-### CI/CD
+```bash
+cd rei-do-chopp-api
+dotnet run
+```
 
-- Commits na branch `master` acionam build automático no GitHub Actions.
-- Imagens são pushadas para GHCR.
-- Deploy automático na VM via SSH.
+### Frontend (Angular)
 
-## API
+```bash
+cd rei-do-chopp-site
+npm install
+ng serve
+```
 
-### Endpoints Principais
-
-- `GET /api/orders` - Listar pedidos
-- `POST /api/orders` - Criar pedido
-- `GET /api/products` - Listar produtos
-- `POST /api/users/login` - Login
-
-Documentação completa via Swagger: `http://localhost:5000/swagger`
-
-## Banco de Dados
-
-- SQL Server em container Docker.
-- Migrations EF Core aplicadas automaticamente.
-- Porta 1433 exposta para conexões externas (DBeaver).
-
-## Helper Python
-
-Aplicação desktop para gerenciar impressão de pedidos.
-
-### Build
+### Helper (Python)
 
 ```bash
 cd rei-do-chopp-helper
-pyinstaller --onefile --noconsole --icon=icon-rei-do-chopp.ico --add-data "icon-rei-do-chopp.ico;." --name="Rei do Chopp" app.py
+python app.py
 ```
 
-## Scripts
+---
 
-- `limpar-base.sql` - Limpar base de dados
-- `vendas-por-produto.sql` - Relatório de vendas
+## 📦 CI / CD (GitHub Actions)
 
-## Segurança
+O pipeline está configurado para:
 
-- Secrets armazenados em `.env` na VM (não commitado).
-- Repositório público, mas dados sensíveis isolados.
-- JWT para autenticação.
+1. Buildar e empurrar imagens Docker para o **GHCR** (`ghcr.io/bernardoabaurre/*`).
+2. Realizar **deploy automático** em uma VM (via SSH), fazendo pull das imagens e subindo containers usando `docker-compose`.
+3. Limpeza automática de images/containers antigos.
 
-## Contribuição
+---
 
-1. Fork o projeto
-2. Crie uma branch: `git checkout -b feature/nova-feature`
-3. Commit suas mudanças: `git commit -am 'Adiciona nova feature'`
-4. Push: `git push origin feature/nova-feature`
-5. Abra um Pull Request
+## 🧩 Principais funcionalidades implementadas
 
-## Licença
+- Gestão de pedidos (criar, editar, listar, status)
+- Gestão de produtos com controle de estoque
+- Gestão de fornecedores / reposições
+- Permissões baseadas em roles (JWT + políticas de autorização)
+- Reset de senha via e-mail (Mailjet)
+- Relatórios SQL (ex.: vendas por produto)
+- Arquitetura modular (separação de domínios + testes unitários)
 
-Este projeto é privado e propriedade de Rei do Chopp Distribuidora.
+---
+
+## 🔐 Variáveis de ambiente importantes
+
+| Variável            | Descrição                                         |
+| ------------------- | ------------------------------------------------- |
+| `DB_PASSWORD`       | Senha do Postgres (usada no `docker-compose.yml`) |
+| `JWT_SECRET`        | Chave secreta para assinatura dos tokens JWT      |
+| `EMAIL_PUBLIC_KEY`  | Chave pública Mailjet                             |
+| `EMAIL_PRIVATE_KEY` | Chave privada Mailjet                             |
+| `API_URL`           | URL base do backend (usado pelo frontend)         |
+
+---
+
+## 🔍 Dicas para explorar o projeto
+
+- Identifique o uso de **Clean Architecture** (`Domain`, `Application`, `Infra`, `IoC`).
+- Compare o fluxo de login + JWT (controllers → serviços → Identity) com o consumo no Angular (interceptadores e guardas).
+- Observe o helper Python como exemplo de solução multiplataforma (desktop) para impressão local.
+
+---
+
+## ✅ Como contribuir
+
+1. Fork o repositório
+2. Crie uma branch: `git checkout -b feature/<nome>`
+3. Faça suas alterações
+4. Crie um pull request explicando as mudanças
+
+---
+
+## 📄 Licença
+
+Este projeto é propriedade de Rei do Chopp Distribuidora.
