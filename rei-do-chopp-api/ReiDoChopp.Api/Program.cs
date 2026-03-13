@@ -48,7 +48,7 @@ builder.Services.AddSwaggerGen(c =>
 NativeInjectorBootStrapper.RegisterServices(builder.Services, builder.Configuration);
 
 builder.Services.AddAutoMapper(typeof(OrdersProfile).Assembly);
-           
+
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 var app = builder.Build();
