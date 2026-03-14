@@ -28,7 +28,7 @@ namespace ReiDoChopp.Domain.Restockings.Entities
         {
             if (date == DateTime.MinValue)
                 throw new ArgumentException("Required field: Date");
-            Date = date;
+            Date = DateTime.SpecifyKind(date, DateTimeKind.Utc);
         }
         public virtual void SetUser(User user)
         {

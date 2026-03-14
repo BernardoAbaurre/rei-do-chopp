@@ -43,7 +43,7 @@ namespace ReiDoChopp.Domain.Orders.Entities
             if (orderDate <= DateTime.MinValue)
                 throw new ArgumentException("Required field: Order");
 
-            OrderDate = orderDate;
+            OrderDate = DateTime.SpecifyKind(orderDate, DateTimeKind.Utc);
         }
 
         public virtual void SetDiscount(double? discount)

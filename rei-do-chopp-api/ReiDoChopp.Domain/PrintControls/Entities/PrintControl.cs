@@ -17,7 +17,7 @@ namespace ReiDoChopp.Domain.PrintControls.Entities
         public PrintControl(User user, string content)
         {
             SetStatus(PrintControlStatusEnum.Requested);
-            SetRequestDate(DateTime.Now);
+            SetRequestDate(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
             SetUser(user);
             SetContent(content);
         }
@@ -31,7 +31,7 @@ namespace ReiDoChopp.Domain.PrintControls.Entities
         {
             if (requestDate == DateTime.MinValue)
                 throw new ArgumentException("Required field: RequestDate");
-            RequestDate = requestDate;
+            RequestDate = DateTime.SpecifyKind(requestDate, DateTimeKind.Utc);
         }
         public virtual void SetUser(User user)
         {

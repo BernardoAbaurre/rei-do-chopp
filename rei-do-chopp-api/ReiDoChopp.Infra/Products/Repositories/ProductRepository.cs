@@ -34,8 +34,8 @@ namespace ReiDoChopp.Infra.Products.Repositories
                 var description = filter.Description;
 
                 query = query.Where(x =>
-                    EF.Functions.Unaccent(x.Description)
-                        .Contains(EF.Functions.Unaccent(description)));
+                    EF.Functions.Unaccent(x.Description.ToLower())
+                        .Contains(EF.Functions.Unaccent(description.ToLower())));
             }
             if (!string.IsNullOrEmpty(filter.DescriptionOrBarCode))
             {
@@ -43,8 +43,8 @@ namespace ReiDoChopp.Infra.Products.Repositories
 
                 query = query.Where(x =>
                     x.BarCode == term ||
-                    EF.Functions.Unaccent(x.Description)
-                        .Contains(EF.Functions.Unaccent(term)));
+                    EF.Functions.Unaccent(x.Description.ToLower())
+                        .Contains(EF.Functions.Unaccent(term.ToLower())));
             }
             if (filter.SellingPrice.HasValue)
             {

@@ -43,6 +43,32 @@ namespace ReiDoChopp.Infra.Data
 
             base.OnModelCreating(modelBuilder);
 
+            // Configurar todos os DateTime/DateTime? para serem tratados como UTC sem conversão
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(
+                            new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DateTime, DateTime>(
+                                v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                                v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                            )
+                        );
+                    }
+                    else if (property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(
+                            new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DateTime?, DateTime?>(
+                                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v,
+                                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v
+                            )
+                        );
+                    }
+                }
+            }
+
             modelBuilder.Entity<Role>().HasData(
                 new Role
                 {

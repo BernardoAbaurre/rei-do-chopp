@@ -19,9 +19,12 @@ namespace ReiDoChopp.Application.Restockings.Profiles
             CreateMap<Restocking, RestockingResponse>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FirstName + " " + src.User.LastName));
 
-            CreateMap<RestockingListRequest, RestockingsListFilter>();
+            CreateMap<RestockingListRequest, RestockingsListFilter>()
+                .ForMember(dest => dest.InitialDate, opt => opt.MapFrom(src => src.InitialDate.HasValue ? DateTime.SpecifyKind(src.InitialDate.Value, DateTimeKind.Utc) : (DateTime?)null))
+                .ForMember(dest => dest.FinalDate, opt => opt.MapFrom(src => src.FinalDate.HasValue ? DateTime.SpecifyKind(src.FinalDate.Value, DateTimeKind.Utc) : (DateTime?)null));
 
-            CreateMap<RestockingRequest, RestockingCommand>();
+            CreateMap<RestockingRequest, RestockingCommand>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Date, DateTimeKind.Utc)));
 
             CreateMap<RestockingHistoryModel, RestockingHistoryResponse>();
 

@@ -12,7 +12,9 @@ namespace ReiDoChopp.Application.OpertaionsHistories.Profiles
         {
             CreateMap<OperationHistoryModel, OperationHistoryResponse>();
 
-            CreateMap<OperationHistoryListRequest, OpertaionsHistoriesListFilter>();
+            CreateMap<OperationHistoryListRequest, OpertaionsHistoriesListFilter>()
+                .ForMember(dest => dest.InitialDate, opt => opt.MapFrom(src => src.InitialDate.HasValue ? DateTime.SpecifyKind(src.InitialDate.Value, DateTimeKind.Utc) : (DateTime?)null))
+                .ForMember(dest => dest.FinalDate, opt => opt.MapFrom(src => src.FinalDate.HasValue ? DateTime.SpecifyKind(src.FinalDate.Value, DateTimeKind.Utc) : (DateTime?)null));
         }
     }
 }
