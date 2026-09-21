@@ -21,6 +21,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -36,6 +41,7 @@ jobs:
         with:
           context: ./rei-do-chopp-api
           file: ./Dockerfile.api
+          platforms: linux/arm64
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/rei-do-chopp-api:latest
           provenance: false
@@ -45,6 +51,7 @@ jobs:
         with:
           context: ./rei-do-chopp-site
           file: ./Dockerfile.angular
+          platforms: linux/arm64
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/rei-do-chopp-site:latest
           provenance: false
@@ -54,40 +61,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to VM
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ""
+          authkey: ${{ secrets.TS_AUTHKEY }}
+          version: latest
+
+      - name: Deploy to Raspberry Pi
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 104.236.2.50
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: 100.93.121.107
+          username: bernardo
+          key: ${{ secrets.PI_SSH_KEY }}
           script: |
             set -e  # Exit on any error
 
-            cd /root/rei-do-chopp
+            cd /srv/projetos/rei-do-chopp
 
             echo "📦 Pulling latest images..."
-            docker-compose pull
+            docker compose pull
 
             echo "🛑 Stopping old containers..."
-            docker-compose down
+            docker compose down
 
             echo "🚀 Starting new containers..."
-            docker-compose up -d
+            docker compose up -d
 
             echo "✅ Deployment successful! Now cleaning old images..."
 
-            # Remove ALL images not currently in use by any container
-            # This keeps ONLY the images referenced by running containers (current deployment)
+            # Remove images not currently in use by any container
             docker image prune -a --force
 
             # Remove any stopped containers
             docker container prune -f
-
-            # Remove unused volumes
-            docker volume prune -f
-
-            # Clean build cache
-            docker buildx prune -a -f
 
             echo "🧹 Cleanup complete!"
             echo ""
