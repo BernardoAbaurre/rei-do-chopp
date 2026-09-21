@@ -1,6 +1,9 @@
 # Environment variables
 .env
 
+# Local secrets (use appsettings.Development.json.example as template)
+**/appsettings.Development.json
+
 # Build artifacts
 build/
 dist/
